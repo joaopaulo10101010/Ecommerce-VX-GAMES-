@@ -1,0 +1,120 @@
+﻿body{
+    background-color: #FAFAFA;
+}
+.fundocontainerpagamento{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.divendereco {
+    border-radius: 16px;
+    box-shadow: 0px -1px 4px rgb(0,0,0,0.25),0px 4px 4px rgb(0,0,0,0.25);
+    width: 400px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+}
+.divendereco:hover {
+    background-color: #2980b9;
+    transform: scale(1.035);
+}
+
+
+.formulario {
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 10px;
+    border: 1px solid rgb(0,0,0,0.25);
+    border-radius: 50px;
+}
+.botaoselecionarpag{
+    min-width:60%;
+    border-radius: 8px;
+    font-size: 16px;
+    border: 1px solid rgba(0,0,0,0.25);
+}
+
+.botaoselecionarpag:hover {
+    transition: ease 0.2s;
+    transform: scale(1.03);
+}
+.botaoselecionarpag:not(:hover) {
+    transition: ease 0.2s;
+    transform: scale(1);
+}
+.botaoselecionarpag:active {
+    transition: ease 0.3s;
+    transform: scale(0.98);
+}
+
+
+.iconespag{
+    width: 25px;
+    padding-right: 5px;
+}
+.btboleto {
+    background-color: rgba(249,249,249,0.27);
+}
+.btpix {
+    background-color: rgba(48,255,72,0.40);
+}
+.btcartaocred {
+    background-color: rgba(255,251,120,0.27);
+}
+.btcartaodebt {
+    background-color: rgba(40,234,255,0.40);
+}
+.listaopc{
+    display:flex;
+    flex-direction:column;
+    justify-content:left;
+}
+.backcartao {
+    border: 1px solid rgba(0,0,0,0.25);
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+    border-radius: 16px;
+    width: 380px;
+    box-shadow: 0px -1px 4px rgb(0,0,0,0.25),0px 4px 4px rgb(0,0,0,0.25);
+
+}
+
+
+.imgcart{
+    width: 10%;
+}
+.botaodesucesso {
+    font-size: 25px;
+    background-color: #9DB1FF;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 30px;
+
+}
+.bandeira{
+    width: 50px;
+    margin-left:85%;
+}
+.divbotaoboleto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.credito{
+    background-color: rgba(253, 255, 14, 0.36);
+}
+.debito{
+    background-color: rgba(125, 255, 223, 0.90);
+}
+
+.divendereco.selecionado {
+    background-color: #007bff !important;
+    color: white;
+    border-color: #0056b3;
+}

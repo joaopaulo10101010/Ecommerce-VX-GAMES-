@@ -1,0 +1,283 @@
+﻿@model LojaGames.Models.ListasProdutos;
+@using System.Globalization;
+
+
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<link href="~/css/home.css" rel="stylesheet"/>
+
+<div id="carouselExampleControls" class="carousel slide xfull" data-bs-ride="carousel" data-bs-interval="6000">
+    <div class="carousel-inner">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        </div>
+        <div class="carousel-item active" style="height: 33.3vw;">
+            <img class="d-block w-100 h-100" src="@Url.Content("~/assets/image/exibicao/banner1.svg")">
+        </div>
+        <div class="carousel-item" style="height: 33.3vw;">
+            <img class="d-block w-100 h-100" src="@Url.Content("~/assets/image/exibicao/BANNER2.svg")">
+        </div>
+        <div class="carousel-item" style="height: 33.3vw;">
+            <img class="d-block w-100 h-100" src="@Url.Content("~/assets/image/exibicao/BANNER4.svg")">
+        </div>
+        <div class="carousel-item" style="height: 33.3vw;">
+            <img class="d-block w-100 h-100" src="@Url.Content("~/assets/image/exibicao/Banner3.svg")">
+        </div>
+        <div class="carousel-item" style="height: 33.3vw;">
+            <img class="d-block w-100 h-100" src="@Url.Content("~/assets/image/exibicao/Banner6.svg")">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Próximo</span>
+    </button>
+</div>
+
+<div class="d-flex justify-content-center" style="padding-top: 50px; padding-bottom: 30px;">
+    <div class="barradetitulo"><div class="titulodabarra">Destaques</div></div>
+</div>
+
+<div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 33.3vw;">
+
+    <div class="position-absolute start-0 top-50 translate-middle-y" style="z-index: 2; cursor: pointer;" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
+        <img src="/assets/image/icones/seta-direita.png" alt="Anterior" style="width: 40px;transform:rotate(180deg);">
+    </div>
+
+    <div id="carouselExampleControls2" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000" style="width: 80%;">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleControls2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleControls2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleControls2" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner">
+            @{
+                var produtosComDesconto = Model.listadeprodutos
+                    .Where(p => p.Desconto_prod > 0)
+                    .OrderByDescending(p => p.Desconto_prod)
+                    .ToList();
+                
+                int totalSlides = (int)Math.Ceiling(produtosComDesconto.Count / 3.0);
+                
+                totalSlides = Math.Min(totalSlides, 3);
+                
+                for (int slide = 0; slide < totalSlides; slide++)
+                {
+                    <div class="carousel-item @(slide == 0 ? "active" : "")">
+                        <div class="row justify-content-center">
+                            <div class="col-12 containerdosentro">
+                                <div class="p-3 row justify-content-center">
+                                    @{
+                                        var produtosSlide = produtosComDesconto
+                                            .Skip(slide * 3)
+                                            .Take(3);
+                                        
+                                        foreach (var item in produtosSlide)
+                                        {
+                                            
+                                            <form asp-controller="ProcuraControler" asp-action="adicionarCarrinho" method="post" class="containerdoproduto p-3 position-relative">
+                                                <span class="position-absolute top-0 end-0 m-2 badge bg-danger fs-6" style="transform: rotate(45deg);">
+                                                    -@item.Desconto_prod.ToString("0")%
+                                                </span>
+
+                                                <img class="imagemcotainerproduto w-100 object-fit-cover" style="height: 220px;" src="@item.img_path">
+                                                <div class="conteudoproduto p-2">
+                                                    <div class="nomedoitem pb-1" style="overflow:auto;height:80px;">
+                                                        @item.Nome_prod - @item.Descricao_prod
+                                                    </div>
+                                                    <input type="hidden" name="Id" value="@item.Id_prod">
+                                                    <div class="preco pb-1">
+                                                        @item.ValorCusto_prod.ToString("C", new CultureInfo("pt-br"))
+                                                    </div>
+                                                    <div class="precoavista">
+                                                        <div class="textoavista">A Vista no PIX</div>
+                                                        <div class="precovista">@item.ValorVenda_prod.ToString("C", new CultureInfo("pt-br"))</div>
+                                                    </div>
+                                                    <button style="border-radius: 10px;" type="submit" class="w-100 btn btn-success">Adicionar ao Carrinho</button>
+                                                </div>
+                                            </form>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="position-absolute end-0 top-50 translate-middle-y" style="z-index: 2; cursor: pointer;" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
+        <img src="/assets/image/icones/seta-direita.png" alt="Próximo" style="width: 40px;">
+    </div>
+</div>
+
+</div>
+<div class="banner backgroundbanner1 xfull"></div>
+
+<div class="d-flex justify-content-center" style="padding-top: 50px; padding-bottom: 30px;">
+    <div class="barradetitulo"><div class="titulodabarra">Novidades do PlayStation</div></div>
+</div>
+
+<div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 33.3vw;">
+    <div class="position-absolute start-0 top-50 translate-middle-y" style="z-index: 2; cursor: pointer;" data-bs-target="#carouselPlayStation" data-bs-slide="prev">
+        <img src="/assets/image/icones/seta-direita.png" alt="Anterior" style="width: 40px;transform:rotate(180deg);">
+    </div>
+    <div id="carouselPlayStation" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000" style="width: 80%;">
+        <div class="carousel-indicators">
+            @{
+                var produtosPlayStation = Model.listadeprodutos
+                    .Where(p => p.Marca_prod == "Sony" && p.Desconto_prod > 0)
+                    .OrderByDescending(p => p.Desconto_prod)
+                    .ToList();
+                
+                int totalSlidesPS = (int)Math.Ceiling(produtosPlayStation.Count / 3.0);
+                totalSlidesPS = Math.Min(totalSlidesPS, 3);
+                
+                for (int i = 0; i < totalSlidesPS; i++)
+                {
+                    <button type="button" data-bs-target="#carouselPlayStation" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-label="Slide @(i+1)"></button>
+                }
+            }
+        </div>
+
+        <div class="carousel-inner">
+            @{
+                for (int slide = 0; slide < totalSlidesPS; slide++)
+                {
+                    <div class="carousel-item @(slide == 0 ? "active" : "")">
+                        <div class="row justify-content-center">
+                            <div class="col-12 containerdosentro">
+                                <div class="p-3 row justify-content-center">
+                                    @{
+                                        var produtosSlidePS = produtosPlayStation
+                                            .Skip(slide * 3)
+                                            .Take(3);
+                                        
+                                        foreach (var item in produtosSlidePS)
+                                        {
+                                            <form asp-controller="ProcuraControler" asp-action="adicionarCarrinho" method="post" class="containerdoproduto p-3 position-relative">
+                                                <span class="position-absolute top-0 end-0 m-2 badge bg-danger fs-6" style="transform: rotate(45deg);">
+                                                    -@item.Desconto_prod.ToString("0")%
+                                                </span>
+
+                                                <img class="imagemcotainerproduto w-100 object-fit-cover" style="height: 220px;" src="@item.img_path">
+                                                <div class="conteudoproduto p-2">
+                                                    <div class="nomedoitem pb-1" style="overflow:auto;height:80px;">
+                                                        @item.Nome_prod - @item.Descricao_prod
+                                                    </div>
+                                                    <div class="preco pb-1">
+                                                        @item.ValorCusto_prod.ToString("C", new CultureInfo("pt-br"))
+                                                    </div>
+                                                    <input type="hidden" name="Id" value="@item.Id_prod">
+                                                    <div class="precoavista">
+                                                        <div class="textoavista">A Vista no PIX</div>
+                                                        <div class="precovista">@item.ValorVenda_prod.ToString("C", new CultureInfo("pt-br"))</div>
+                                                    </div>
+                                                    <button style="border-radius: 10px;" type="submit" class="w-100 btn btn-success">Adicionar ao Carrinho</button>
+                                                </div>
+                                            </form>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="position-absolute end-0 top-50 translate-middle-y" style="z-index: 2; cursor: pointer;" data-bs-target="#carouselPlayStation" data-bs-slide="next">
+        <img src="/assets/image/icones/seta-direita.png" alt="Próximo" style="width: 40px;">
+    </div>
+</div>
+
+<div class="banner backgroundbanner2 xfull"></div>
+
+<div class="d-flex justify-content-center" style="padding-top: 50px; padding-bottom: 30px;">
+    <div class="barradetitulo"><div class="titulodabarra">Novidades do Xbox</div></div>
+</div>
+
+<div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 33.3vw;">
+    <div class="position-absolute start-0 top-50 translate-middle-y" style="z-index: 2; cursor: pointer;" data-bs-target="#carouselXbox" data-bs-slide="prev">
+        <img src="/assets/image/icones/seta-direita.png" alt="Anterior" style="width: 40px;transform:rotate(180deg);">
+    </div>
+    <div id="carouselXbox" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000" style="width: 80%;">
+        <div class="carousel-indicators">
+            @{
+                var produtosXbox = Model.listadeprodutos
+                    .Where(p => p.Marca_prod == "Xbox" && p.Desconto_prod > 0)
+                    .OrderByDescending(p => p.Desconto_prod)
+                    .ToList();
+                
+                int totalSlidesXbox = (int)Math.Ceiling(produtosXbox.Count / 3.0);
+                totalSlidesXbox = Math.Min(totalSlidesXbox, 3);
+                
+                for (int i = 0; i < totalSlidesXbox; i++)
+                {
+                    <button type="button" data-bs-target="#carouselXbox" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-label="Slide @(i+1)"></button>
+                }
+            }
+        </div>
+
+        <div class="carousel-inner">
+            @{
+                for (int slide = 0; slide < totalSlidesXbox; slide++)
+                {
+                    <div class="carousel-item @(slide == 0 ? "active" : "")">
+                        <div class="row justify-content-center">
+                            <div class="col-12 containerdosentro">
+                                <div class="p-3 row justify-content-center">
+                                    @{
+                                        var produtosSlideXbox = produtosXbox
+                                            .Skip(slide * 3)
+                                            .Take(3);
+                                        
+                                        foreach (var item in produtosSlideXbox)
+                                        {
+                                            <form asp-controller="ProcuraControler" asp-action="adicionarCarrinho" method="post" class="containerdoproduto p-3 position-relative">
+                                                <span class="position-absolute top-0 end-0 m-2 badge bg-danger fs-6" style="transform: rotate(45deg);">
+                                                    -@item.Desconto_prod.ToString("0")%
+                                                </span>
+
+                                                <img class="imagemcotainerproduto w-100 object-fit-cover" style="height: 220px;" src="@item.img_path">
+                                                <div class="conteudoproduto p-2">
+                                                    <div class="nomedoitem pb-1" style="overflow:auto;height:80px;">
+                                                        @item.Nome_prod - @item.Descricao_prod
+                                                    </div>
+                                                    <div class="preco pb-1">
+                                                        @item.ValorCusto_prod.ToString("C", new CultureInfo("pt-br"))
+                                                    </div>
+                                                    <input type="hidden" name="Id" value="@item.Id_prod">
+                                                    <div class="precoavista">
+                                                        <div class="textoavista">A Vista no PIX</div>
+                                                        <div class="precovista">@item.ValorVenda_prod.ToString("C", new CultureInfo("pt-br"))</div>
+                                                    </div>
+                                                    <button style="border-radius: 10px;" type="submit" class="w-100 btn btn-success">Adicionar ao Carrinho</button>
+                                                </div>
+                                            </form>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="position-absolute end-0 top-50 translate-middle-y" style="z-index: 2; cursor: pointer;" data-bs-target="#carouselXbox" data-bs-slide="next">
+        <img src="/assets/image/icones/seta-direita.png" alt="Próximo" style="width: 40px;">
+    </div>
+</div>

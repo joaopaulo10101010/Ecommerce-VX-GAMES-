@@ -1,0 +1,97 @@
+﻿@model LojaGames.Models.ListasProdutos;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+
+@{
+	ViewData["Title"] = "Pagamento";
+}
+
+
+<link href="~/css/pagamento.css" rel="stylesheet" />
+
+
+
+
+<div class="fundocontainerpagamento">
+	<form asp-action="Pagamento" class="bg-white formulario" method="post">
+		<div class="row">
+			<label class="fontpagina" style="font-size: 20px">Endereço de Entrega: <label class="text-danger">@HttpContextAccessor.HttpContext.Session.GetString("retornopag")</label></label>
+		</div>
+		
+		<div class="" style="max-height: 200px; max-width: 900px; overflow-x: auto; overflow-y: hidden;">
+			<div style="display: flex; flex-direction: row; gap: 10px; padding: 10px; min-width: max-content;">
+				<a asp-controller="Endereco" asp-action="EnderecoLista" class="btn btn-primary add-endereco-btn d-flex align-items-center justify-content-center" style="min-width: 50px; height: 120px; font-size: 24px; transition: background-color 0.5s ease, transform 0.5s ease;">
+					+
+				</a>
+				@foreach (var item in Model.listadeenderecos)
+				{
+					<div data-cep="@item.Cep" data-numero="@item.Numero_residencia" class="divendereco p-2 border rounded bg-light" style="min-width: 300px; white-space: normal;">
+						<strong>CEP:</strong> @item.Cep<br />
+						<strong>Endereço:</strong> @item.Endereco, @item.Numero_residencia<br />
+						<strong>Complemento:</strong> @item.Complemento<br />
+						<strong>UF:</strong> @item.Uf_est
+					</div>
+				}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<label>Pagamento:</label>
+		</div>
+		<div id="itemselecionado">
+			<input type="hidden" name="cepSelecionado" />
+			<input type="hidden" name="numeroSelecionado"  />
+		</div>
+		<div class="row">
+			<div class="col">
+				<label style="padding-left:25px;" class="w-100 pb-1 fontpagina">METODOS DE PAGAMENTO:</label>
+				<div class="listadebotoes">
+					<button type="button" id="btboleto" class="fontbold fontpagina w-100 botaoselecionarpag btboleto p-1 m-1"><img class="iconespag" src="~/assets/image/icones/iconeboleto.png" />Boleto</button>
+					<button type="button" id="btpix" class="fontbold fontpagina w-100 botaoselecionarpag btpix p-1 m-1"><img class="iconespag" src="~/assets/image/icones/iconepix.svg" />PIX</button>
+					<button type="button" id="btcartaocredito" class="fontbold fontpagina w-100 botaoselecionarpag btcartaocred p-1 m-1"><img class="iconespag" src="~/assets/image/icones/iconecartao.png" />Cartão de Credito</button>
+					<button type="button" id="btcartaodebito" class="fontbold fontpagina w-100 botaoselecionarpag background-color p-1 m-1"><img class="iconespag" src="~/assets/image/icones/iconecartao.png" />Cartão de Debito</button>
+				</div>
+			</div>
+			<div class="col" id="listadeformulario">
+				@*-----------------------------------*@
+				<label>Dados do Cartão de Credito:</label>
+				<div class="backcartao credito">
+					<div class="row">
+						<div class="listaopc w-100">
+							<label for="numerocartao">Numero do cartão:</label>
+							<input required name="numerocartao" id="numerocartao" maxlength="16" minlength="16" class="w-100" type="text">
+						</div>
+					</div>
+					<div class="row">
+						<div class="listaopc w-50">
+							<label for="datacartao">Data do vencimento:</label>
+							<input required name="datacartao" type="month">
+						</div>
+						<div class="listaopc w-50">
+							<label for="cvccartao">CVC</label>
+							<input required name="cvccartao" maxlength="3" minlength="3" type="text">
+						</div>
+					</div>
+					<input type="hidden" name="formulario" value="cartaocredito">
+					<div class="row">
+						<div class="listaopc">
+							<label for="nomecartao">Nome do cartão:</label>
+							<input required type="text" name="nomecartao">
+							<img id="bande" class="bandeira" src="" />
+						</div>
+					</div>
+				</div>
+				@*-----------------------------------*@
+			</div>
+		</div>
+		<div class="w-100 d-flex justify-content-center p-3">
+			<button type="submit" class="fontbold fontpagina text-black btn btn-success botaodesucesso">FINALIZAR PEDIDO</button>
+		</div>
+		
+	
+	
+	</form>
+	
+	
+</div>
+<script src="~/js/pagamento.js"></script>

@@ -1,0 +1,97 @@
+﻿@model LojaGames.Models.ListasProdutos;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+
+@{
+    ViewData["Title"] = "Minha Conta";
+}
+
+
+
+
+<link href="@Url.Content("~/css/endereco.css")" rel="stylesheet" />
+
+
+<div class="w-100 h-100 d-flex justify-content-center align-items-center">
+    <div class="bordadosenderecos p-3">
+        <h1 class="fontpagina fontbold w-100" style="text-align:center;">SEUS ENDEREÇOS</h1>
+        <hr class="w-100" style="border: 1px solid #146FAD;">
+        <div class="w-100" style="overflow-y:auto; height: 200px;">
+            <table class="tabelaedere">
+                <thead>
+                    <tr>
+                        <th>CEP:</th>
+                        <th>Endereços:</th>
+                        <th>Numero:</th>
+                        <th>Complemento:</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody class="listaderesu" style="max-height:100px; overflow:auto;">
+
+                    @{
+                        foreach(var item in Model.listadeenderecos)
+                        {
+                            <tr>
+                                <td>@item.Cep</td>
+                                <td>@item.Endereco</td>
+                                <td>@item.Numero_residencia</td>
+                                @if (item.Complemento == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@item.Complemento</td>
+                                }
+
+                                <td><a asp-action="ExcluirEndereco" asp-route-cep="@item.Cep" asp-route-numero="@item.Numero_residencia" class="btn btn-warning" type="button">Excluir</a></td>
+                            </tr>
+
+                        }
+
+
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr class="w-100" style="border: 1px solid #146FAD;" />
+        <form class="w-100" asp-action="EnderecoLista" method="post">
+            <h3 class="fontpagina fontbold w-100" style="text-align:center;">NOVO ENDEREÇO</h3>
+            <div class="w-100 d-flex justify-content-center align-items-center">
+                <div class="col-auto p-1">
+                    <div class="w-100"><label class="fontpagina" style="font-size: 20px;">CEP: <input name="cep" maxlength="8" minlength="8" id="inputcep" type="text" class="form-control" required/></label></div>
+                    <div class="w-100"><label class="fontpagina" style="font-size: 20px;">Numero: <input name="numero" maxlength="9" id="inputnumero" type="text" class="form-control" required /></label></div>
+                </div>
+                <div class="col-auto p-1">
+                    <div class=""><label class="w-100 fontpagina" style="font-size: 20px;">Endereço: <input name="endereco" required maxlength="99" readonly id="inputendereco" type="text" class="form-control" style="width:260px;" /></label></div>
+                    <div class=""><label class="w-100 fontpagina" style="font-size: 20px;">Bairro: <input name="bairro" required readonly maxlength="99" id="inputbairro" type="text" class="form-control" style="width:260px;" /></label></div>
+                </div>
+            </div>
+            <div class="col-auto p-1 d-flex justify-content-center">
+                <label class="fontpagina" style="font-size: 20px;">Complemento: <input name="complemento" maxlength="49" id="inputcomplemento" type="text" class="form-control" style="width:440px;" /></label>
+            </div>
+            <div class="w-100 p-2 d-flex justify-content-center align-items-center"><button id="form" class="btn btn-success">Cadastrar Endereço</button></div>
+            <div id="camposauxiliares">
+
+                <input type="hidden" value="">
+
+            </div>
+        </form>
+        <hr class="w-100" style="border: 1px solid #146FAD;" />
+
+        @{
+            if (HttpContextAccessor.HttpContext.Session.GetString("back") == "Pagamento")
+            {
+                <a asp-area="" asp-controller="PagamentoControler" asp-action="Pagamento" class="btn btn-info fontpagina w-25 mt-4" style="font-size: 30px;border-radius: 20px;">Voltar</a>
+            } 
+            else
+            {
+                <a asp-area="" asp-controller="Conta" asp-action="Conta" class="btn btn-info fontpagina w-25 mt-4" style="font-size: 30px;border-radius: 20px;">Voltar</a>
+            }
+        }
+        
+    </div>
+</div>
+<script src="~/js/endereco.js"></script>

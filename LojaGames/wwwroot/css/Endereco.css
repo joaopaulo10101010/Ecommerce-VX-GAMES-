@@ -1,0 +1,20 @@
+﻿body{
+    background-color: #FAFAFA;
+}
+
+.bordadosenderecos {
+    box-shadow: 0px -1px 4px rgb(0,0,0,0.25),0px 4px 4px rgb(0,0,0,0.25);
+    margin-top: 20px;
+    border: 1px solid rgba(0,0,0,0.25);
+    border-radius: 51px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1050px;
+}
+.tabelaedere{
+    width: 95%;
+    padding-left: 10px;
+    padding-right:10px;
+}

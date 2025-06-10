@@ -1,0 +1,181 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@model LojaGames.Models.ListasProdutos;
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LojaGames</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/LojaGames.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow d-flex flex-column">
+            <div class="container-fluid">
+                <a class="navbar-brand linklogo" asp-area="" asp-controller="Home" asp-action="Index"><img id="logo" src="~/assets/image/logopn-removebg-preview.png" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 d-flex align-items-center w-100">
+                        <li class="nav-item barradepesquisa mx-auto">
+                            <form asp-controller="ProcuraControler" asp-action="Procura" method="post">
+                                <div class="fundopesquisa">
+                                    <img class="lupa" src="~/assets/image/lupa.png">
+                                    <input name="pesquisa" class="form-control barraentradapesquisa" placeholder="Faça sua pesquisa aqui...">
+                                </div>
+                            </form>
+                        </li>
+
+
+                        <li class="conta">
+                            
+                            <a asp-area="" asp-controller="LoginControler" asp-action="Login" class="conjuntominhaconta">
+                                <img style="border-radius: 300px;" src="@Model.usuario.Img_caminho"/>
+                                <label class="text-white nav-link">
+                                    @(string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("perfil"))
+                                                                                            ? "Entrar na Conta"
+                                                                                            : HttpContextAccessor.HttpContext.Session.GetString("perfil"))
+                                </label>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="divcarrinho">
+                                <img src="~/assets/image/carrinho-de-compras.png" role="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" alt="Carrinho" style="cursor: pointer;" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container-fluid barradeopcoes d-flex justify-content-center align-items-center text-center">
+                <a asp-controller="ProcuraControler" asp-action="Procura" asp-route-pesquisa="playstation" class="flex-fill nav-link text-white"><img class="logoshop" src="~/assets/image/playstation-logotype.png">PLAYSTATION</a>
+                <a asp-controller="ProcuraControler" asp-action="Procura" asp-route-pesquisa="xbox" class="flex-fill nav-link text-white"><img class="logoshop" src="~/assets/image/xbox-logo.png">XBOX</a>
+                <a asp-controller="ProcuraControler" asp-action="Procura" asp-route-pesquisa="informatica" class="flex-fill nav-link text-white"><img class="logoshop" src="~/assets/image/laptop.png">INFORMATICA</a>
+                <a asp-controller="ProcuraControler" asp-action="Procura" asp-route-pesquisa="smartphone" class="flex-fill nav-link text-white"><img class="logoshop" src="~/assets/image/smartphone.png">SMARTPHONE</a>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+            <!-- Carrinho retraido que esta a direita-->
+            <link rel="stylesheet" href="~/css/Carrinho.css" asp-append-version="true" />
+            <div class="offcanvas offcanvas-end barrasuperiorcr" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+                <div class="offcanvas-header bg-black">
+                    <h5 class="offcanvas-title text-white fontpagina titulocarrinho" id="offcanvasCartLabel">MEU CARRINHO</h5>
+                    <button type="button" class="btn-close carrinhobotao" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+                </div>
+                <div class="w-100 linhatitulo pb-2"></div>
+                <h1 class="quantitenscar w-100 fontpagina">1 item na sua lista</h1>
+                <div class="w-100 linhahr pb-1"><hr class="p-0 m-0"></div>
+                <div class="offcanvas-body">
+                    <div class="container alturacont">
+
+                        @if (string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("perfil")) || HttpContextAccessor.HttpContext.Session.GetString("perfil") == "Entrar na Conta")
+                        {
+                            <label class="mensagemlog">Entre na conta, para usar o carrinho.</label>
+                            <div class="w-100 d-flex justify-content-center pt-3">
+                                <a class="btn btn-outline-success" asp-area="" asp-controller="LoginControler" asp-action="Login">Faça Login</a>
+                            </div>
+                        }
+                        else
+                        {
+                            if (Model.listacarrinho != null)
+                            {
+                                HttpContextAccessor.HttpContext.Session.SetString("valortotalcarrinho", "");
+                                int a = 0;
+                                decimal valortotal = 0;
+                                @foreach (var item in Model.listacarrinho)
+                                {
+                                    valortotal = valortotal + item.preco_prod;
+                                    a = a + 1;
+                                    HttpContextAccessor.HttpContext.Session.SetString("produto" + a, "1");
+                                    <section class="row pb-2">
+                                        <img style="height: 110px;" class="col-4 imagemcari" src="@item.tb_Produto.img_path"/>
+                                        <div class="col-7 conteudocarrinho">
+                                            <div class=" pb-2">
+                                                <div>@item.tb_Produto.Nome_prod - @item.tb_Produto.Descricao_prod</div>
+                                            </div>
+                                            <div class="campobotao">
+                                                <div class="backbotum">
+                                                    <button type="button" onclick="executarQuantidade('@item.Id_carrinho','-')" class="botaomenos">-</button>
+                                                    <label data-desconto="@item.tb_Produto.ValorCusto_prod" class="valorbotao" data-valoritemc="@(item.tb_Produto.ValorVenda_prod)" data-quantidadeitem="1"  data-listacar="@item.Id_carrinho">1</label>
+                                                    <button class="botaomais" onclick="executarQuantidade('@item.Id_carrinho','+')">+</button>
+                                                </div>
+
+                                                <label class="p-1 fontbold" data-valoritem="@item.tb_Produto.ValorVenda_prod" data-saidavaloritem="@item.Id_carrinho">@item.tb_Produto.ValorVenda_prod.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</label>
+                                            </div>
+                                        </div>
+                                        <img class="col-1 imagemlixo p-0 m-0" src="\assets\image\icones\lata-de-lixo.png" />
+                                    </section>
+                                    HttpContextAccessor.HttpContext.Session.SetString("valortotalcarrinho", valortotal.ToString("C", new System.Globalization.CultureInfo("pt-BR")));
+                                }
+                            }
+                            else
+                            {
+                                <h3>Adicione um Pedido a sua lista</h3>
+                            }
+                        }
+                    </div>
+
+                    @if (string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("perfil")) || HttpContextAccessor.HttpContext.Session.GetString("perfil") == "Entrar na Conta")
+                    {}
+                    else
+                    {
+                        <div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-7 fontpagina fontbold">CARRINHO: </div>
+                                <div id="saidapresobruto" class="col-5 d-flex justify-content-end">R$ 0,00</div>
+                            </div>
+                            <div class="row pb-3">
+                                <div class="col-7 fontpagina fontbold" style="color: red;">DESCONTO: </div>
+                                <div id="saidadesconto" class="col-5 d-flex justify-content-end" style="color: red;">R$ 0,00</div>
+                            </div>
+                            <div class="row pb-3">
+                                <div class="col-7 fontpagina fontbold" style="font-size: 25px;">TOTAL: </div>
+                                <div class="col-5 fontbold d-flex justify-content-end" id="saidavalortotal" style="font-size: 18px;">R$ 0,00</div>
+                            </div>
+                            <div class="w-100 d-flex justify-content-center">
+                                <a asp-area="" asp-controller="PagamentoControler" asp-action="Pagamento" class="btn btn-success text-black botaocompraritens fontbold">Finalizar a Compra</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!--*******************************************-->
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contato">
+                <h3>Contato</h3>
+                <p>Email: vxgamescontato@gmail.com</p>
+                <p>Telefone: (11) 4002-8922</p>
+            </div>
+            <div class="redesSociais">
+                <h3>Redes Sociais</h3>
+                <ul>
+                    <li><a style="text-decoration: none; color:white;" href="https://www.facebook.com/?locale=pt_BR">Facebook</a></li>
+                    <li><a style="text-decoration: none; color:white;" href="https://www.instagram.com/">Instagram</a></li>
+                    <li><a style="text-decoration: none; color:white;" href="https://x.com/">Twitter</a></li>
+                </ul>
+            </div>
+            <div class="direitos">
+                <p>&copy; 2025 VX-GAMES. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

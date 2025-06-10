@@ -1,0 +1,75 @@
+﻿@font-face {
+    font-family: 'jersey25';
+    src: url('../assets/font/jersey25-regular.ttf') format('truetype');
+}
+
+.fontpagina {
+    font-family: jersey25;
+}
+.carrinhobotao {
+    color: white;
+    background-color: white;
+}
+.titulocarrinho{
+    font-size: 30px;
+    padding-left: 30px;
+}
+.linhatitulo {
+    background-color: #146FAD;
+}
+.quantitenscar{
+    text-align:center;
+    font-size: 30px;
+    padding-top: 10px;
+}
+.linhahr{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.imagemcari{
+    padding: 0;
+    border-radius:20px;
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.imagemlixo{
+    width:8%;
+    height:50%;
+}
+.campobotao{
+    display:flex;
+    flex-direction:row;
+    align-items:center
+}
+.backbotum{
+    border: 1px solid rgba(0,0,0,0.25);
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+}
+
+.botaomenos{
+    text-align:center;
+    background-color:red;
+    width: 30px;
+    height: 30px;
+}
+.botaomais {
+    text-align: center;
+    background-color: green;
+    width: 30px;
+    height: 30px;
+}
+.valorbotao{
+    padding-left:12px;
+    padding-right:12px;
+}
+.fontbold{
+    font-weight:bold;
+}
+.conteudocarrinho{
+    padding-right: 0;
+    padding-left: 15px;
+    padding-top: 1px;
+    padding-bottom: 0;
+}

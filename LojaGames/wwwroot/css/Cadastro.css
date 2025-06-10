@@ -1,0 +1,45 @@
+﻿.titulo-cli {
+    text-align: center;
+    color: blue;
+    margin-bottom: 20px;
+}
+
+.form-cadastro {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background: #FAFAFA;
+}
+
+body {
+    background:#FAFAFA;
+    
+}
+
+
+.form-group {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background: #FAFAFA;
+    margin-bottom: 15px;
+}
+
+.btn-cadastrar {
+    background-image: linear-gradient(#0026ff,aqua);
+    color: #0026ff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+    margin: 0 auto;
+    transition: 0.1s color ease;
+}
+    .btn-cadastrar:hover {
+        background: black;
+    }

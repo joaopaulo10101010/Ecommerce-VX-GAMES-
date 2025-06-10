@@ -1,0 +1,74 @@
+﻿
+.wallpaperprodutos{
+    background-color: blue;
+}
+
+@font-face {
+    font-family: 'jersey25';
+    src: url('../assets/font/jersey25-regular.ttf') format('truetype');
+}
+.fontpagina{
+    font-family: jersey25;
+}
+
+.carousel-item img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.xfull {
+    width: calc(25px + 100%);
+    margin-left: -15px;
+    margin-top: -2.5px;
+}
+
+.backfiltro {
+    min-width: max-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 7px;
+    background-color: white;
+    box-shadow: 0px 4px 4px rgb(0,0,0,0.25)
+}
+
+/*------------------*/
+
+.containerdoproduto {
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 250px;
+    height: auto;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 34px;
+    box-shadow: 0px -1px 4px rgb(0,0,0,0.25),0px 4px 4px rgb(0,0,0,0.25);
+}
+
+.imagemcotainerproduto {
+    border-radius: 34px;
+    width: 100%;
+}
+
+.preco {
+    font-size: 15px;
+    color: rgba(0,0,0,0.70)
+}
+
+.textoavista {
+    font-size: 12px;
+    color: #FFA600;
+}
+
+.precovista {
+    font-size: 24px;
+    color: #FF9E16;
+}
+.lista {
+    display: flex;
+    flex-wrap: wrap;
+}
+.backpr{
+    padding-left: 5vw;
+}

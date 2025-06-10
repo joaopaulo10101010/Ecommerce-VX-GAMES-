@@ -1,0 +1,66 @@
+﻿@model LojaGames.Models.ListasProdutos;
+
+
+@{
+    ViewData["Title"] = "Minha Conta";
+}
+
+
+<link href="@Url.Content("~/css/endereco.css")" rel="stylesheet" />
+
+
+<div class="w-100 h-100 d-flex justify-content-center align-items-center">
+    <div class="bordadosenderecos p-3">
+        <h1 class="fontpagina fontbold w-100" style="text-align:center;">Meus Pedidos</h1>
+        <hr class="w-100" style="border: 1px solid #146FAD;">
+        <div class="w-100" style="overflow-y:auto; height: 400px;">
+            <table class="tabelaedere">
+                <thead>
+                    <tr>
+                        <th>Pedido Nº</th>
+                        <th>Data do Pedido:</th>
+                        <th>Entrega:</th>
+                        <th>Pagamento</th>
+                        <th>Destino:</th>
+                        <th>Itens:</th>
+                    </tr>
+                </thead>
+
+                <tbody class="listaderesu" style="max-height:100px; overflow:auto;">
+
+                    @{
+                        int memoria = -1;
+                        @foreach (var item in Model.listadohistorico.OrderByDescending(p => p.Id_pedido))
+                        {
+                            if(memoria != item.Id_pedido)
+                            {
+                                <tr style="border-top: 1px solid rgba(0,0,255,0.25);">
+                                    <td>@item.Id_pedido</td>
+                                    <td>@item.Data_pedido_car</td>
+                                    <td>@item.Data_entrega_car</td>
+                                    <td>@item.Inforamacaoad_pag</td>
+                                    <td>@item.Cep, @item.Endereco, @item.Numero_residencia - @item.Uf_est, @item.Nome_est</td>
+                                    <td>
+                                        @foreach (var item2 in Model.listadohistorico.OrderByDescending(p => p.Id_pedido))
+                                        {
+                                            if(item.Id_pedido == item2.Id_pedido)
+                                            {
+                                                <span>@item2.Nome_prod, </span>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                                memoria = item.Id_pedido;
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr class="w-100" style="border: 1px solid #146FAD;">
+
+        <a asp-area="" asp-controller="Conta" asp-action="Conta" class="btn btn-info fontpagina w-25 mt-4" style="font-size: 30px;border-radius: 20px;">Voltar</a>
+
+    </div>
+</div>
+<script src="~/js/endereco.js"></script>

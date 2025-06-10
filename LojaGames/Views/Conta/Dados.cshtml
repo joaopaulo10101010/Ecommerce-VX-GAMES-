@@ -1,0 +1,85 @@
+﻿@model LojaGames.Models.ListasProdutos;
+
+
+@{
+    ViewData["Title"] = "Minha Conta";
+}
+
+
+
+<link href="@Url.Content("~/css/endereco.css")" rel="stylesheet" />
+<link href="@Url.Content("~/css/dados.css")" rel="stylesheet" />
+
+<div class="w-100 h-100 d-flex justify-content-center align-items-center">
+    <div class="bordadosenderecos p-3">
+        <h1 class="fontpagina fontbold w-100" style="text-align:center;">Meus Dados</h1>
+        <hr class="w-100" style="border: 1px solid #146FAD;">
+        <div class="w-100" style="overflow-y:auto; height: 400px;">
+            <div class="d-flex flex-column justify-content-center align-items-center editarimagem w-100">
+                <img id="imagemdeeditar" src="@Model.usuario.Img_caminho" style="width: 150px;height:150px;margin-bottom: 10px; border: 1px solid rgba(0,0,0,0.25);border-radius: 100px;">
+                <label for="inputimage" class="btn btn-primary mb-2" style="border-radius: 10px;">Selecionar Imagem</label>
+                <input type="file" id="inputimage" name="imagemform" accept="image/*" style="display: none;">
+            </div>
+            <form method="post" class="w-100" asp-action="AtualizarDados">
+                <div class="mb-3 row formput" style="width:96%;">
+                    <label for="excpf" class="col-sm-2 col-form-label">CPF:</label>
+                    <div class="col-sm-10">
+                        <input type="text" maxlength="11" name="excpf" readonly class="form-control-plaintext" value="@Model.usuario.Cpf_cli">
+                    </div>
+                </div>
+                <div class="mb-3 row formput" style="width:96%;">
+                    <label for="exnome" class="col-sm-2 col-form-label">Nome:</label>
+                    <div class="col-sm-10">
+                        <input name="exnome" maxlength="99" type="text" class="form-control" value="@Model.usuario.Nome">
+                    </div>
+                </div>
+                <div class="mb-3 row formput" style="width:96%;">
+                    <label for="exemail" class="col-sm-2 col-form-label">Email:</label>
+                    <div class="col-sm-10">
+                        <input name="exemail" maxlength="49" type="email" class="form-control" value="@Model.usuario.Email">
+                    </div>
+                </div>
+                <div class="mb-3 row formput" style="width:96%;">
+                    <label for="exusuario" class="col-sm-2 col-form-label">Usuario:</label>
+                    <div class="col-sm-10">
+                        <input name="exusuario" maxlength="49" type="text" class="form-control" value="@Model.usuario.Usuario_cli">
+                    </div>
+                </div>
+                <div class="mb-3 row formput" style="width:96%;">
+                    <label for="exsenha" class="col-sm-2 col-form-label">Senha:</label>
+                    <div class="col-sm-10">
+                        <input name="exsenha" maxlength="49" type="password" class="form-control" value="@Model.usuario.Senha_cli">
+                    </div>
+                </div>
+
+                @{
+                    string telefone = Model.usuario.telefones.Telefone; string DD = Model.usuario.telefones.DD; string telefonecompleto = $"({DD}) {telefone}";
+                }
+
+                <div class="mb-3 row formput" style="width:96%;">
+                    <label for="extelefone" class="col-sm-2 col-form-label">Telefone:</label>
+                    <div class="col-sm-10">
+                        <input name="extelefone" maxlength="11" minlength="10" type="text" class="form-control" value="@telefonecompleto">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success fontpagina w-25 mt-4" style="font-size: 25px; border-radius: 20px;">
+                        Atualizar Dados
+                    </button>
+                </div>
+                
+
+
+            </form>
+            
+
+
+        </div>
+        <hr class="w-100" style="border: 1px solid #146FAD;">
+
+        <a asp-area="" asp-controller="Conta" asp-action="Conta" class="btn btn-info fontpagina w-25 mt-4" style="font-size: 30px;border-radius: 20px;">Voltar</a>
+
+    </div>
+</div>
+<script src="~/js/endereco.js"></script>
+<script src="~/js/dados.js"></script>

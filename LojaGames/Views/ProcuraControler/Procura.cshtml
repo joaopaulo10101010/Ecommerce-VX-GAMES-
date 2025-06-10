@@ -1,0 +1,117 @@
+﻿@model LojaGames.Models.ListasProdutos;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+
+
+@{
+    ViewData["Title"] = "Lista de Produtos";
+}
+
+
+<link href="~/css/produto.css" rel="stylesheet" />
+<script>
+    const caixas = '@HttpContextAccessor.HttpContext.Session.GetString("redirecionarpesquisa")';
+</script>
+<div id="carouselExampleControls" class="carousel slide xfull" data-bs-ride="carousel" data-bs-interval="6000">
+    <div class="carousel-inner">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        </div>
+        <div class="carousel-item active">
+            <img class="d-block" src="@Url.Content("~/assets/image/exibicao/banner1.svg")">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block" src="@Url.Content("~/assets/image/exibicao/BANNER2.svg")">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block" src="@Url.Content("~/assets/image/exibicao/BANNER4.svg")">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block" src="@Url.Content("~/assets/image/exibicao/Banner3.svg")">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block" src="@Url.Content("~/assets/image/exibicao/Banner6.svg")">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Próximo</span>
+    </button>
+</div>
+
+
+<div class="d-flex">
+    <aside class="p-4">
+        <h1 class="fontpagina">Filtro:</h1>
+        <div class="p-3 backfiltro">
+            <h4 class="fontpagina pb-1">Tipo de Produtos:</h4>
+            <label><input type="checkbox" class="filtroTipo" name="cbsmartphone" value="Smartphone" /> Smartphone</label>
+            <label><input type="checkbox" class="filtroTipo" name="cbnotebook" value="Notebook" /> Notebook</label>
+            <label><input type="checkbox" class="filtroTipo" name="cbcomputador" value="Computador" /> Computador - PC</label>
+            <label><input type="checkbox" class="filtroTipo" name="cbhardware" value="Hardware" /> Hardware</label>
+            <label><input type="checkbox" class="filtroTipo" name="cbmdigital" value="Midia Digital" /> Midia Digital</label>
+            <label><input type="checkbox" class="filtroTipo" name="cbmfisica" value="Midia Fisica" /> Midia Fisica</label>
+            <label><input type="checkbox" class="filtroTipo" name="cbconsole" value="Console" /> Console de Video Game</label>
+            <label><input type="checkbox" class="filtroTipo" name="cbacessorio" value="Acessórios" /> Acessórios</label>
+        </div>
+        <div class="p-3 mt-3 backfiltro">
+            <h4 class="fontpagina pb-1">Marcas:</h4>
+            <label><input type="checkbox" class="filtroMarca" name="cbmsony" value="Sony" /> Sony - Playstation</label>
+            <label><input type="checkbox" class="filtroMarca" name="cbmxbox" value="Xbox" /> Microsoft - Xbox</label>
+            <label><input type="checkbox" class="filtroMarca" name="cbmwindows" value="Windows" /> Microsoft - Windows</label>
+            <label><input type="checkbox" class="filtroMarca" name="cbmlogitech" value="Logitech" /> Logitech</label>
+            <label><input type="checkbox" class="filtroMarca" name="cbmpositivo" value="Positivo" /> Positivo</label>
+            <label><input type="checkbox" class="filtroMarca" name="cbmnvidia" value="NVIDIA" /> NVIDIA</label>
+            <label><input type="checkbox" class="filtroMarca" name="cbmamd" value="AMD" /> AMD</label>
+            <label><input type="checkbox" class="filtroMarca" name="cbmintel" value="Intel" /> Intel</label>
+            <label><input type="checkbox" class="filtroMarca" name="cbmasus" value="ASUS" /> ASUS</label>
+        </div>
+    </aside>
+    <div class="p-4">
+        <div class="backpr">
+            <h1 class="fontpagina">Lista de Produtos:</h1>
+            <div class="lista">
+
+                @foreach (var item in Model.listadeprodutos)
+                {
+                    <form asp-action="adicionarCarrinho" method="post">
+                        <section class="containerdoproduto p-3 position-relative" data-tipo="@item.Tipo_prod" data-mark="@item.Marca_prod">
+                            @if (item.Desconto_prod>0)
+                            {
+                                <span class="position-absolute top-0 end-0 m-2 badge bg-danger fs-6" style="transform: rotate(45deg);">
+                                    -@item.Desconto_prod.ToString("0")%
+                                </span>
+                            }
+                            <img style="height:230px;" class="imagemcotainerproduto" src="@item.img_path">
+                            <input type="hidden" name="Id" value="@item.Id_prod">
+                            <div class="conteudoproduto p-2">
+                                <div class="nomedoitem pb-1" style="overflow:auto;height:80px;">
+                                    @Html.DisplayFor(modelItem => item.Nome_prod) - @Html.DisplayFor(modelItem => item.Descricao_prod)
+                                </div>
+                                <div class="preco pb-1">
+                                    @Html.DisplayFor(modelItem => item.ValorCusto_prod)
+                                </div>
+                                <div class="precoavista">
+                                    <div class="textoavista">A Vista no PIX</div>
+                                    <div class="precovista">@Html.DisplayFor(modelItem => item.ValorVenda_prod)</div>
+                                </div>
+                                <button class="btn btn-success botaoenv w-100" type="submit" style="border-radius: 10px;">Adicionar ao Carrinho</button>
+                            </div>
+                        </section>
+                    </form>
+            }
+        </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/js/procura.js"></script>

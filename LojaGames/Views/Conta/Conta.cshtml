@@ -1,0 +1,141 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@model LojaGames.Models.ListasProdutos;
+
+
+@{
+    ViewData["Title"] = "Minha Conta";
+}
+
+<link href="@Url.Content("~/css/conta.css")" rel="stylesheet" />
+
+<style>
+
+
+    .opcoesdaconta:hover {
+        transition: ease 0.4s;
+        transform: scale(1.05);
+        background-color: #0079D6;
+        color:white;
+    }
+
+    .opcoesdaconta:not(:hover) {
+        transition: ease 0.3s;
+        transform: scale(1);
+    }
+
+</style>
+
+
+<div class="container text-center">
+    <div class="row align-items-start margintoph">
+        <div class="col-9 backinfo w-100">
+            <div class="backinfobg row">
+                <div class="col-2">
+                    <img id="iconedoperfil" src="~/assets/image/perfil-de-usuario.png" />
+                </div>
+                <div class="col-6 align-content-center">
+                    <div class="alinhadireita d-flex">
+                        <label class="fontpagina boasvindas" style="padding-bottom: 1px;">Bem Vindo, @HttpContextAccessor.HttpContext.Session.GetString("nome")</label>
+                        <label class="respostatext"><strong class="fontpagina referencia">Usuario:</strong> @HttpContextAccessor.HttpContext.Session.GetString("perfil")</label>
+                        <label class="respostatext"><strong class="fontpagina referencia">E-Mail:</strong> @HttpContextAccessor.HttpContext.Session.GetString("email")</label>
+                    </div>
+                </div>
+                <div class="col-4 align-content-center">
+                    <div class="nivelconta">
+                        <h1>@HttpContextAccessor.HttpContext.Session.GetString("cargo_cli")</h1>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between w-100 opcoesmenu">
+        <a asp-area="" asp-controller="Meusitens" asp-action="Listamenu" class="opcoesdaconta" style="text-decoration:none;cursor:pointer;">
+            <img class="imagemcontamenu" src="~/assets/image/icons8-cesta-64.png" />
+            <div class="campodomenu">
+                <h5 class="titulomenu">Meus Pedidos</h5>
+                <div class="textodotitulomenu">Veja com mais detalhes suas compras</div>
+            </div>
+        </a>
+        <a asp-area="" asp-controller="Conta" asp-action="Dados" class="opcoesdaconta" style="text-decoration:none;cursor:pointer;">
+            <img class="imagemcontamenu" src="~/assets/image/do-utilizador.png" />
+            <div class="campodomenu">
+                <h5 class="titulomenu">Meus Dados</h5>
+                <div class="textodotitulomenu">Veja e altere seus dados cadastrais.</div>
+            </div>
+        </a>
+        <a class="opcoesdaconta" asp-area="" asp-controller="Endereco" asp-action="EnderecoLista" style="text-decoration:none;cursor:pointer;">
+            <img class="imagemcontamenu" style="margin-right:3px;" src="~/assets/image/icons8-em-trânsito-50.png" />
+            <div class="campodomenu">
+                <h5 class="titulomenu">Meus Endereços</h5>
+                <div class="textodotitulomenu">Veja e altere seus endereços de entrega.</div>
+            </div>
+        </a>
+    </div>
+    <div class="row align-items-end">
+        <div class="w-100 backhistorico">
+            <div class="fronthistorico p-4">
+
+                @{
+                    var pedidoMaisRecente = Model.listadohistorico.Max(p => p.Id_pedido);
+                    var itensDoPedidoMaisRecente = Model.listadohistorico.Where(p => p.Id_pedido == pedidoMaisRecente);
+                    var primeiroItem = itensDoPedidoMaisRecente.First();
+                }
+
+                @if (@primeiroItem.Id_pedido != -1)
+                {
+                    <div class="d-flex justify-content-start">
+                        <span class="fontpagina referencia">PEDIDO - ID:</span><span class="pedido">@primeiroItem.Id_pedido</span>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-start">
+                        <span class="fontpagina referencia">PAGAMENTO:</span><span class="pedido">@primeiroItem.Inforamacaoad_pag</span>
+                    </div>
+                    <hr />
+                }
+                else
+                {
+                    <div class="d-flex justify-content-start">
+                    </div>
+                    <hr />
+                }
+
+
+                @foreach (var item in itensDoPedidoMaisRecente)
+                {
+                    if(item.Id_pedido != -1)
+                    {
+                        <div class="d-flex justify-content-start align-items-center">
+                            <img id="imagemdohistorico" src="@item.Img_path" />
+                            <div class="p-4">
+                                <div id="nomehistorico" class="d-flex justify-content-start">
+                                    <span class="fontpagina referencia">NOME:</span>
+                                    <span class="pedido">@item.Nome_prod - @item.Descricao_prod</span>
+                                </div>
+                                <div id="quantidadehistorico" class="d-flex justify-content-start">
+                                    <span class="fontpagina referencia">QUANTIDADE:</span>
+                                    <span class="pedido">@item.Quantidade</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-start align-items-center">
+                            <h1 class="text-center w-100">Acompanhe seus ultimos pedidos</h1>
+                        </div>
+                        <hr />
+                    }
+
+                }
+                
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,51 @@
+﻿@model LojaGames.Models.ListasProdutos;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+
+<link href="@Url.Content("~/css/cadastro.css")" rel="stylesheet" />
+<style>body{background-color: #FAFAFA;}</style>
+
+
+<h1 class="titulo-cli fontpagina">CADASTRO</h1>
+
+<form asp-action="Cadastro" method="post" class="form-cadastro">
+    
+    <div class="from-group">
+        <label>Nome:</label>
+        <input type="text" maxlength="99" name="nome" required class="form-control" />
+    </div>
+
+    <div class="from-group">
+        <label>Cpf:</label>
+        <input type="text" name="cpf" maxlength="11" minlength="11" required class="form-control" />
+    </div>
+
+    <div class="from-group">
+        <label>Usuario:</label>
+        <input type="text" name="usuario" maxlength="49" required class="form-control" />
+    </div>
+
+    <div class="from-group">
+        <label>Senha:</label>
+        <input type="password" name="senha" maxlength="49" required class="form-control" />
+    </div>
+
+    <div class="from-group">
+        <label>Email:</label>
+        <input type="text" name="email" maxlength="49" required class="form-control" />
+    </div>
+    <br />
+    <label class="text-danger">@HttpContextAccessor.HttpContext.Session.GetString("cadastrorep")</label>
+    <button type="submit" style="font-size: 20px;" class="fontpagina btn-cadastrar text-white">Cadastrar</button>
+    <a type="button" style="font-size: 20px;" asp-controller="LoginControler" asp-action="Login" class="fontpagina mt-2 btn-cadastrar text-white text-center text-decoration-none">Voltar</a>
+</form>
+@{
+    HttpContextAccessor.HttpContext.Session.SetString("cadastrorep", "");
+
+}
+
+
