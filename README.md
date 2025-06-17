@@ -282,4 +282,40 @@ create database db_vxgames;
 
 ![image](https://github.com/user-attachments/assets/9d6aa4ee-06a3-4176-b9db-540af9955cd0)
 
+# COMO TESTAR
+
+## Requisitos: 
+* MySQL Workbrench 8.0 instalado.
+* Browser Google Crome, Mozila FireFox, entre outros.
+
+## Passo a Passo
+
+### 1 - BAIXE A DEMO DO SISTEMA(.zip)
+![Tutoria2](https://github.com/user-attachments/assets/b5d72396-6723-4830-9e30-70f655c2d79d)
+
+### 2 - EXTRAIA OS ARQUIVOS DO ZIP 
+![image](https://github.com/user-attachments/assets/714a3b71-b3ac-4256-ba9e-7f0bca1f0b85)
+-----------------------------------------------------------------------------------------
+![image](https://github.com/user-attachments/assets/ed9200a1-0c85-404f-820c-c3124a59d776)
+
+### 3 - CONFIGURANDO O BANCO DE DADOS
+
+#### 3.1 - Abra a pasta MySqlScript.
+![image](https://github.com/user-attachments/assets/4c95ccfd-277a-42a9-b15a-bd431700ee9b)
+#### 3.2 - Dentro do seu MySql Workbrench, coloque os dois scripts. Primeiro selecione o 'create database db_vxgames;' e execute ele, logo em seguida execute a linha abaixo 'use db_vxgames;'
+![image](https://github.com/user-attachments/assets/62a91859-ba2e-444e-a080-837af0feb343)
+#### 3.3 - Selecione todo o script a partir da linha 5 e execute ele.
+![image](https://github.com/user-attachments/assets/873fec17-0712-49e1-a4ab-c3d4489806df)
+#### 3.4 - Agora no segundo script 'MySqlScriptInserts' selecione todos os itens a partir da 3 linha e execute eles.
+
+### 4 - ABRINDO O SISTEMA
+Para abrir o sistema basta executar o 'VX-GAMES.bat'
+![image](https://github.com/user-attachments/assets/526f2f81-c7e9-4e63-8704-4792f776ce6b)
+## COM ISSO O SISTEMA IRA ABRIR, E VOCÊ PODERA TESTAR ELE.
+
+
+
+
+
+
 
