@@ -308,6 +308,10 @@ create database db_vxgames;
 ![image](https://github.com/user-attachments/assets/873fec17-0712-49e1-a4ab-c3d4489806df)
 #### 3.4 - Agora no segundo script 'MySqlScriptInserts' selecione todos os itens a partir da 3 linha e execute eles.
 
+#### 3.5 - Agora va no arquivo app 'appsettings.json' que esta dentro da pasta 'ASPNET' e altere a senha de acesso do banco de dados, pela sua senha que você criou na instalação do seu MySQL.
+![image](https://github.com/user-attachments/assets/a27bb3ce-8884-451d-ae5c-c47621ec0cf0)
+![image](https://github.com/user-attachments/assets/32e1e6ee-c9fd-4641-bf75-fbb541eb8e06)
+
 ### 4 - ABRINDO O SISTEMA
 Para abrir o sistema basta executar o 'VX-GAMES.bat'
 ![image](https://github.com/user-attachments/assets/526f2f81-c7e9-4e63-8704-4792f776ce6b)
